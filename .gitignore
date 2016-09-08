@@ -31,7 +31,8 @@ build/Release
 # Dependency directories
 node_modules
 jspm_packages
-public/lib
+public/lib/bootstrap
+public/lib/jquery
 
 # Optional npm cache directory
 .npm
