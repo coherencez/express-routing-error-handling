@@ -2,8 +2,11 @@ body {
 	background-color: purple;
 	color: white;
 	text-shadow: 5px 5px 5px rgba(0,0,0,.7);
-	text-align: center;
 	margin-top: 10%;
+}
+
+.center-align {
+	text-align: center;
 }
 
 .button-group button {

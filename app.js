@@ -1,11 +1,13 @@
 'use strict'
 
-const express = require('express')
-	,bodyParser = require('body-parser')
-	,     chalk = require('chalk')
-	,    routes = require('./routes/')
-	,       app = express()
-	,      port = process.env.PORT || 3000
+const               express = require('express')
+	,              bodyParser = require('body-parser')
+	,                   chalk = require('chalk')
+	,                     app = express()
+	,                    port = process.env.PORT || 3000
+	,               {connect} = require('./database')
+	,                  routes = require('./routes/')
+
 // pug config
 app.set('port', port)
 app.set('view engine', 'pug')
@@ -42,6 +44,14 @@ app.use((err, req, res, next) => {
 	console.error(err.stack)
 })
 
-app.listen(port, () => {
-	console.log(`Express server listening on port ${port}`)
-})
+
+// connect to MONGODB, then initiate node/express to listen for incoming reqs
+connect()
+	.then(() => {
+		app.listen(port, () => {
+			console.log(`Express server listening on port ${port}`)
+		})
+	})
+	.catch(console.error)
+
+

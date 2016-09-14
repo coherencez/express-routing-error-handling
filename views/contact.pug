@@ -1,7 +1,7 @@
 extends includes/layout.pug
 
 block content
-	h1 Contact Us
+	h1.center-align Contact Us
 	form(method='POST')
 		.form-group
 			label(for="exampleInputEmail1") Email
@@ -11,7 +11,7 @@ block content
 			input(type="text", name="name", class="form-control", id="exampleInputName", placeholder="Name:")
 		.form-group
 			label(for="exampleInputPassword1") Phone
-			input(type="tel", name="tel" class="form-control", id="exampleInputPassword1", placeholder="Phone:")
+			input(type="tel", name="phone" class="form-control", id="exampleInputPassword1", placeholder="Phone:")
 		.form-group
 			label(for="message") Message
 			textarea.form-control(name="message", id="message", placeholder="Message:")
