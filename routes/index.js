@@ -2,9 +2,9 @@
 const { Router } = require('express')
   ,      Contact = require('../models/contact')
   ,        Order = require('../models/order')
-  ,        Size = require('../models/size')
-  ,    Toppings = require('../models/toppings')
-  , mongoose = require('mongoose')
+  ,         Size = require('../models/size')
+  ,     Toppings = require('../models/toppings')
+  ,     mongoose = require('mongoose')
 	,        route = Router()
 
 	route.get('/', (req, res) => {
@@ -19,30 +19,43 @@ const { Router } = require('express')
 		res.render('contact', {title: 'Contact', doe: true})
 	})
 
-	route.post('/contact', (req,res,next) => {
+	route.post('/contact', (req,res,cb) => {
 		Contact
 		  .create(req.body)
 			.then(() => res.redirect('/'))
-			.catch(next)
+			.catch(cb)
 	})
 
-	route.get('/order', (req,res, next) => {
+	route.get('/order', (req,res,cb) => {
 		Promise.all([
-			Size.find().sort(),
+			Size.find().sort({inches: 1}),
 			Toppings.find()
 			])
 			.then(([sizes, toppings]) => 
 				res.render('order', {title: 'Order', order: true, sizes, toppings})
 			)
-			.catch(next)
+			.catch(cb)
 		
 	})
 
-	route.post('/order', (req,res,next) => {
+	route.post('/order', ({body},res,cb) => {
 		Order
-			.create(req.body)
+			.create(body)
 			.then(() => res.redirect('/'))
-			.catch(next)
+			.catch(({ errors }) => {
+				Promise.all([ // retrieve sizes/toppings from DB again
+					Promise.resolve(errors), // but pass errors as well
+					Size.find().sort({ inches: 1 }),
+					Toppings.find().sort({ name: 1 }),
+				])
+			})
+			.then(([errors,sizes,toppings,]) => {
+			 	// UI/UX additions
+			 	// send errors to renderer to change styling and add error messages
+			 	// also, send the req.body to use as initial form input values
+				res.render('order', { page: 'Order', sizes, toppings, errors, body })
+			})
+			.catch(cb)
 	})
 
 module.exports = route
