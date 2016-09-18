@@ -10,7 +10,7 @@
     "db:seed": "node db/dbseed.js",
     "deploy": "git push heroku master",
     "start": "node app.js",
-    "postinstall": "bower install $$ npm run db:seed"
+    "postinstall": "bower install && npm run db:seed"
   },
   "keywords": [],
   "author": "",
