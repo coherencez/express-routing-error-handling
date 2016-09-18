@@ -30,20 +30,30 @@ app.use(routes)
 // express 3 version
 // routes(app)
 
-// error handling middleware
+// custrom 404 page
 app.use((req, res, next) => {
-	// console.error('404')
-	// const err = Error('Not Found')
-	// err.status = 404
-	// next(err)
 	res.render('404')
 })
 
-app.use((err, req, res, next) => {
-	console.log('Error Happened bitch')
-	res.sendStatus(err. status || 500)
-	console.error(`[${Date()}]`, chalk.red(`${req.method} ${req.url}`), `Error(${chalk.red(res.statusCode)}): ${chalk.red(res.statusMessage)}`)
-	console.error(err.stack)
+// error handling middleware
+app.use((err, {method, url, headers: {'user-agent': agent}}, res, next) => {
+	// res.sendStatus(err. status || 500)
+	// console.error(`[${Date()}]`, chalk.red(`${req.method} ${req.url}`), `Error(${chalk.red(res.statusCode)}): ${chalk.red(res.statusMessage)}`)
+	// console.error(err.stack)
+	if(process.env.NODE_ENV === 'production') {
+		res.sendStatus(err.status || 500)
+	} else {
+		res.set('Content-Type', 'text/plain').send(err.stack)
+	}
+
+	const timeStamp     = new Date()
+	const statusCode    = res.statusCode
+	const statusMessage = res.statusMessage
+
+	console.error(
+       `[${timeStamp}] "${red(`${method} ${url}`)}" Error (${statusCode}): "${statusMessage}"`
+     )
+  console.error(err.stack)
 })
 
 
