@@ -21,7 +21,7 @@ app.use((req, res, cb) => {
 })
 app.locals.company = 'Pizza Go'
 app.locals.erros = {} //errors & body added to avoid guard statements
-app.locals.body = {} //i.e. value=(body && body.name) vs value=body.name
+app.locals.body = { toppings: []} //i.e. value=(body && body.name) vs value=body.name
 
 // routes
 // express 4 version
