@@ -2,10 +2,10 @@
 
 const               express = require('express')
 	,              bodyParser = require('body-parser')
-	,                   chalk = require('chalk')
+	,                   {red} = require('chalk')
 	,                     app = express()
 	,                    port = process.env.PORT || 3000
-	,               {connect} = require('./database')
+	,               {connect} = require('./db/database')
 	,                  routes = require('./routes/')
 
 // pug config
@@ -15,10 +15,7 @@ app.set('view engine', 'pug')
 // middlewarez
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({extended: false}))
-app.use((req, res, cb) => {
-	console.log(`[${Date()}]`, chalk.cyan(`${req.method} ${req.url}`), req.headers['user-agent'])
-	cb()
-})
+
 app.locals.company = 'Pizza Go'
 app.locals.erros = {} //errors & body added to avoid guard statements
 app.locals.body = { toppings: []} //i.e. value=(body && body.name) vs value=body.name
