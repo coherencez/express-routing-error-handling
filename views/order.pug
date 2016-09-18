@@ -19,6 +19,14 @@ block content
             )
         if errors.email
           span.help-block= errors.email.message
+      .form-group
+        label.control-label(for="email") Email
+        input.form-control#email(
+          type="email" 
+          name="email" 
+          placeholder="Email:"
+          required
+          )
       //- .form-group(class={'has-error': errors.name})
         label.control-label(for="name") Name
           input.form-control#name(
