@@ -1,0 +1,28 @@
+extends includes/layout.pug
+
+block content
+  .heading
+    h1.center-align Login
+    if(error)
+      h2= error
+  .order-form
+    form(method='POST')
+      .form-group
+        label.control-label(for="email") Email
+        input.form-control#email(
+          type="email" 
+          name="email" 
+          placeholder="Email:"
+          required
+          )
+      .form-group
+        label.control-label(for="password") Password
+        input.form-control#password(
+          type="password" 
+          name="password" 
+          placeholder="Password:"
+          required
+          )
+      .button-group
+        button(class="btn btn-danger") Cancel
+        button(type="submit", class="btn btn-success") Submit
