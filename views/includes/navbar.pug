@@ -14,5 +14,9 @@ nav.navbar.navbar-inverse.navbar-fixed-top#nav1
 							li(class=john ? 'active' : ''): a(href='/about') About
 							li(class=doe ? 'active' : ''): a(href="/contact") Contact
 							li(class=order ? 'active' : ''): a(href="/order") Order
-							li(class=login ? 'active' : ''): a(href="/login") Login
-							li(class=register ? 'active' : ''): a(href="/register") Register
+							if(user)
+								li #{user.email} 
+							else
+								li(class=login ? 'active' : ''): a(href="/login") Login
+								li(class=register ? 'active' : ''): a(href="/register") Register
+

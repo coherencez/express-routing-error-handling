@@ -7,17 +7,29 @@ const               express = require('express')
 	,                    port = process.env.PORT || 3000
 	,               {connect} = require('./db/database')
 	,                  routes = require('./routes/')
+	,                 session = require('express-session')
+	,              RedisStore = require('connect-redis')(session)
 
 // pug config
 app.set('port', port)
 app.set('view engine', 'pug')
 
 // middlewarez
+app.use(session({
+	store: new RedisStore(),
+	secret: 'pizzapartysecret'
+}))
+
+app.use((req,res,next) => {
+	app.locals.user = req.session.email
+	next()
+})
+
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({extended: false}))
 
 app.locals.company = 'Pizza Go'
-app.locals.erros = {} //errors & body added to avoid guard statements
+app.locals.errors = {} //errors & body added to avoid guard statements
 app.locals.body = {} //i.e. value=(body && body.name) vs value=body.name
 
 // routes

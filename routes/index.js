@@ -64,7 +64,7 @@ const { Router } = require('express')
     res.render('login', {title: 'Login', login: true})
   })
 
-  route.post('/login', ({body: {email, password}},res,cb) => {
+  route.post('/login', ({session, body: {email, password}},res,cb) => {
     User
       .findOne({email})
       .then(user => {
@@ -86,6 +86,7 @@ const { Router } = require('express')
       .then(matches => {
         // if user exists, and password matches, redirect to main page
         if(matches) {
+          session.email = email
           res.redirect('/')
         } else {
           res.render('login', {error: 'Email &/or password does not match'})
