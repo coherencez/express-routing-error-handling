@@ -1,9 +1,8 @@
 'use strict'
 const { Router } = require('express')
   ,     route = Router()
+  ,  { index } = require('../controllers/about')
 
-route.get('/about', (req,res) => {
-  res.render('about', {title: 'About', john: true})
-})
+route.get('/about', index)
 
 module.exports = route
