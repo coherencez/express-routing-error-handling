@@ -8,81 +8,21 @@ const { Router } = require('express')
   ,     mongoose = require('mongoose')
   ,        route = Router()
   ,      contact = require('./contact')
+  ,        login = require('./login')
+  ,     register = require('./register')
+  ,        about = require('./about')
+  ,         home = require('./home')
 
-  route.get('/', (req, res) => {
-    res.render('index', {auth: true})
-  })
 
-  route.get('/about', (req,res) => {
-    res.render('about', {title: 'About', john: true})
-  })
+  route.use(home)
 
+  route.use(about)
 
   route.use(contact)
 
-  route.get('/login', (req,res) => {
-    res.render('login', {title: 'Login', login: true})
-  })
+  route.use(login)
 
-  route.post('/login', ({session, body: {email, password}},res,cb) => {
-    User
-      .findOne({email})
-      .then(user => {
-        if(user) {
-          // if user exists, compare hashes, then either resolve or reject
-          return new Promise((resolve, reject) => {
-              bcrypt.compare(password, user.password, (err, matches) => {
-                if (err) {
-                  reject(err)
-                } else {
-                  resolve(matches)
-                }
-              })
-            })
-        } else {
-          res.render('login', {error: 'Email does not exist in our system'})
-        }
-      })
-      .then(matches => {
-        // if user exists, and password matches, redirect to main page
-        if(matches) {
-          session.email = email
-          res.redirect('/')
-        } else {
-          res.render('login', {error: 'Email &/or password does not match'})
-        }
-      })
-      .catch(cb)
-  })
-
-  route.get('/register', (req,res) => {
-    res.render('register', {title: 'Register', register: true})
-  })
-
-  route.post('/register', ({body: {email,password,confirmation}},res,cb) => {
-    if(password === confirmation) {
-      User
-      .findOne({email})
-      .then(user => {
-        if(user) {
-          res.render('register', {title: 'Register', error: 'Email in use'})
-        } else {
-          return new Promise((resolve, reject) => {
-            bcrypt.hash(password, 15, (err, hash) => {
-              if(err) { reject(err) }
-              else { resolve(hash)}
-            })
-          })
-          // return User.create({email, password})
-        }
-      })
-      .then(hash => User.create({email, password: hash}))
-      .then(() => res.redirect('/'))
-      .catch(cb)
-    } else {
-      res.render('register', {title: 'Register', error: 'Password && password confirmation do not match'})
-    }
-  })
+  route.use(register)
 
   // guard middleware
   route.use((req,res,next) => {
