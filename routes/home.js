@@ -1,9 +1,8 @@
 'use strict'
 const { Router } = require('express')
   ,     route = Router()
+  ,    { index } = require('../controllers/home')
 
-route.get('/', (req, res) => {
-  res.render('index', {auth: true})
-})
+route.get('/', index)
 
 module.exports = route
