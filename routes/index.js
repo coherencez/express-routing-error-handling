@@ -1,13 +1,13 @@
 'use strict'
 const { Router } = require('express')
   ,       bcrypt = require('bcrypt')
-  ,      Contact = require('../models/contact')
   ,        Order = require('../models/order')
   ,         Size = require('../models/size')
   ,     Toppings = require('../models/toppings')
   ,         User = require('../models/user')
   ,     mongoose = require('mongoose')
   ,        route = Router()
+  ,      contact = require('./contact')
 
   route.get('/', (req, res) => {
     res.render('index', {auth: true})
@@ -17,16 +17,8 @@ const { Router } = require('express')
     res.render('about', {title: 'About', john: true})
   })
 
-  route.get('/contact', (req,res) => {
-    res.render('contact', {title: 'Contact', doe: true})
-  })
 
-  route.post('/contact', (req,res,cb) => {
-    Contact
-      .create(req.body)
-      .then(() => res.redirect('/'))
-      .catch(cb)
-  })
+  route.use(contact)
 
   route.get('/login', (req,res) => {
     res.render('login', {title: 'Login', login: true})

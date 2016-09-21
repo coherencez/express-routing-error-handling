@@ -65,6 +65,7 @@ app.use((err, {method, url, headers: {'user-agent': agent}}, res, next) => {
        `[${timeStamp}] "${red(`${method} ${url}`)}" Error (${statusCode}): "${statusMessage}"`
      )
   console.error(err.stack)
+	next()
 })
 
 
