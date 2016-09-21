@@ -16,7 +16,9 @@ app.set('view engine', 'pug')
 
 // middlewarez
 app.use(session({
-	store: new RedisStore(),
+	store: new RedisStore({
+		url: process.env.REDIS_URL || 'redis://localhost:6379'
+	}),
 	secret: 'pizzapartysecret'
 }))
 
@@ -74,5 +76,3 @@ connect()
 		})
 	})
 	.catch(console.error)
-
-

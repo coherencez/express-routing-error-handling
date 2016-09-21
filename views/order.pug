@@ -7,8 +7,8 @@ block content
   .heading
     h1.center-align Order
   .order-form
-    form(method='POST')
-      //- .form-group(class={'has-error': errors.email})
+    .form-group(class={'has-error': errors.email})
+      form(method='POST')
         label.control-label(for="email") Email
           input.form-control#email(
             type="email" 
@@ -19,15 +19,7 @@ block content
             )
         if errors.email
           span.help-block= errors.email.message
-      .form-group
-        label.control-label(for="email") Email
-        input.form-control#email(
-          type="email" 
-          name="email" 
-          placeholder="Email:"
-          required
-          )
-      //- .form-group(class={'has-error': errors.name})
+      .form-group(class={'has-error': errors.name})
         label.control-label(for="name") Name
           input.form-control#name(
             type="text" 
@@ -38,7 +30,7 @@ block content
             )
         if errors.name
           span.help-block= errors.name.message
-      //- .form-group(class={'has-error': errors.phone})
+      .form-group(class={'has-error': errors.phone})
         label.control-label(for="phone") Phone Number
           input.form-control#phone(
             type="tel"
@@ -49,7 +41,7 @@ block content
             )
         if errors.phone
           span.help-block= errors.phone.message
-      //- .form-group(class={'has-error': errors.size})
+      .form-group(class={'has-error': errors.size})
         label.form-control(for="size") Size
         select.form-control#size(name='size' required)
           option(selected disabled) Please Select A Size
@@ -60,7 +52,7 @@ block content
             ) #{size.name}: #{size.inches}"
         if errors.size
           span.help-block= errors.size.message
-      //- .form-group(class={'has-error': errors.toppings})
+      .form-group(class={'has-error': errors.toppings})
         //- label(for="toppings") Toppings
         //- select.form-control#size(name='toppings')
         //-   option(selected disabled) Please Select A Size
@@ -73,17 +65,6 @@ block content
               | #{topping.name}
         if errors.toppings
           span.help-block= errors.toppings.message
-      .form-group
-        //- label(for="toppings") Toppings
-        //- select.form-control#size(name='toppings')
-        //-   option(selected disabled) Please Select A Size
-        //-   each topping in toppings
-        //-     option(value=topping.inches) #{topping.name}: #{topping.quantity}"
-        each topping in toppings
-          div
-            label.control-label(for='toppings')
-              input(type='checkbox' name='toppings' value=topping.name)
-              | #{topping.name}
       .button-group
         button(class="btn btn-danger") Cancel
         button(type="submit", class="btn btn-success") Submit

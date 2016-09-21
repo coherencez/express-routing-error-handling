@@ -15,8 +15,7 @@ nav.navbar.navbar-inverse.navbar-fixed-top#nav1
 							li(class=doe ? 'active' : ''): a(href="/contact") Contact
 							li(class=order ? 'active' : ''): a(href="/order") Order
 							if(user)
-								li #{user.email} 
+								li: a(href='/logout') Logged in as #{user}
 							else
 								li(class=login ? 'active' : ''): a(href="/login") Login
 								li(class=register ? 'active' : ''): a(href="/register") Register
-
