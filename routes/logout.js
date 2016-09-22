@@ -1,10 +1,10 @@
 'use strict'
 const { Router } = require('express')
   ,        route = Router()
-  ,       logout = require('../controllers/logout')
+  ,       session = require('../controllers/session')
 
-  route.get('/logout', logout.index)
+  route.get('/logout', session.edit)
 
-  route.post('/logout', logout.destroy)
+  route.post('/logout', session.destroy)
 
 module.exports = route

@@ -1,11 +1,11 @@
 'use strict'
 const { Router } = require('express')
-const      route = Router()
-  ,      login = require('../controllers/login')
+  ,        route = Router()
+  ,      session = require('../controllers/session')
 
 
-route.get('/login', login.new)
+route.get('/login', session.new)
 
-route.post('/login', login.create)
+route.post('/login', session.create)
 
 module.exports = route
