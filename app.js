@@ -54,7 +54,7 @@ app.use((err, {method, url, headers: {'user-agent': agent}}, res, next) => {
 	if(process.env.NODE_ENV === 'production') {
 		res.sendStatus(err.status || 500)
 	} else {
-		res.set('Content-Type', 'text/plain').send(err.stack)
+		// res.set('Content-Type', 'text/plain').send(err.stack)
 	}
 
 	const timeStamp     = new Date()
