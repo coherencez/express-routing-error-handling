@@ -1,17 +1,10 @@
 'use strict'
 const { Router } = require('express')
-const    Contact = require('../models/contact')
-const      route = Router()
+  ,        route = Router()
+  ,      contact = require('../controllers/contact')
 
-route.get('/contact', (req,res) => {
-  res.render('contact', {title: 'Contact', doe: true})
-})
+route.get('/contact', contact.new)
 
-route.post('/contact', (req,res,cb) => {
-  Contact
-    .create(req.body)
-    .then(() => res.redirect('/'))
-    .catch(cb)
-})
+route.post('/contact', contact.create)
 
 module.exports = route
