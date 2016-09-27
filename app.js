@@ -69,7 +69,7 @@ app.use((err, {method, url, headers: {'user-agent': agent}}, res, next) => {
 })
 
 
-// connect to MONGODB, then initiate node/express to listen for incoming reqs
+// connect to MONGODB, then initiate node/express to listen for incoming reqs 
 connect()
 	.then(() => {
 		app.listen(port, () => {
