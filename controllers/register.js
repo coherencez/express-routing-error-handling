@@ -21,7 +21,6 @@ module.exports.create = ({body: {email,password,confirmation}},res,cb) => {
             else { resolve(hash)}
           })
         })
-        // return User.create({email, password})
       }
     })
     .then(hash => User.create({email, password: hash}))

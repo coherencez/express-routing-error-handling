@@ -1,8 +1,4 @@
 'use strict'
-
-
-
-'use strict'
 const  bcrypt = require('bcrypt')
   ,      User = require('../models/user')
 
