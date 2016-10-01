@@ -2,6 +2,7 @@
 
 const               express = require('express')
 	,              bodyParser = require('body-parser')
+	,                passport = require('passport')
 	,                   {red} = require('chalk')
 	,                     app = express()
 	,                    port = process.env.PORT || 3000
@@ -22,8 +23,12 @@ app.use(session({
 	secret: 'pizzapartysecret'
 }))
 
+require('./lib/passport-strategies')
+app.use(passport.initialize())
+app.use(passport.session())
+
 app.use((req,res,next) => {
-	app.locals.user = req.session.email
+	app.locals.user = req.user && req.user.email
 	next()
 })
 
@@ -69,7 +74,7 @@ app.use((err, {method, url, headers: {'user-agent': agent}}, res, next) => {
 })
 
 
-// connect to MONGODB, then initiate node/express to listen for incoming reqs 
+// connect to MONGODB, then initiate node/express to listen for incoming reqs
 connect()
 	.then(() => {
 		app.listen(port, () => {
