@@ -1,6 +1,8 @@
 'use strict'
-const { compare } = require('bcrypt')
+const { compare, hash } = require('bcrypt')
 const mongoose = require('mongoose')
+
+const BCRYPT_DIFFICULTY = 15
 const HTML5_EMAIL_VALIDATION = /^[a-zA-Z0-9.!#$%&’*+=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
 const userSchema = mongoose.Schema({
@@ -12,6 +14,15 @@ const userSchema = mongoose.Schema({
 		index: {unique: true}
 	},
 	password: {type: String, required: [true, 'Please enter a password longer than you think you need']},
+})
+
+userSchema.pre('save', function(cb) {
+	const user = this
+	hash(user.password, BCRYPT_DIFFICULTY, (err, hashedPassword) => {
+		if(err) { return cb(err) }
+		user.password = hashedPassword
+		cb()
+	})
 })
 
 userSchema.statics.findOneByEmail = function (email, cb) {
