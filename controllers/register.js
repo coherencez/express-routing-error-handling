@@ -10,7 +10,7 @@ module.exports.new = (req,res) => {
 module.exports.create = ({body: {email,password,confirmation}},res,cb) => {
   if(password === confirmation) {
     User
-    .findOne({email})
+    .findOneByEmail({email})
     .then(user => {
       if(user) {
         res.render('register', {title: 'Register', error: 'Email in use'})

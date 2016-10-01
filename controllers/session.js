@@ -9,7 +9,7 @@ module.exports.new = (req,res) => {
 
 module.exports.create = ({session, body: {email, password}},res,cb) => {
   User
-    .findOne({email})
+    .findOneByEmail({email})
     .then(user => {
       if(user) {
         // if user exists, compare hashes, then either resolve or reject
